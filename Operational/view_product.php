@@ -9,13 +9,13 @@
 
 
    if (isset($_POST['delete'])) {
-   	$p_id = $_POST['id'];
+   	$p_id = $_POST['product_id'];
    	$p_id = filter_var($p_id, FILTER_SANITIZE_STRING);
 
-   	$delete_product = $conn->prepare("DELETE FROM users WHERE id = ?");
+   	$delete_product = $conn->prepare("DELETE FROM productst WHERE id = ?");
    	$delete_product->execute([$p_id]);
 
-   	echo "<script>alert(' deleted success');</script>";
+   	echo "<script>alert('product deleted success');</script>";
    }
 ?>
 <!DOCTYPE html>
@@ -31,32 +31,30 @@
 	
 <div class="main">
 	<div class="banner">
-		<h1>users</h1>
+		<h1>dashboard</h1>
 	</div>
 	<section class="show-post">
-		<h1 class="heading">all users</h1>
+		<h1 class="heading">all products</h1>
 		<div class="box-container">
 			<?php
-			  $select_op = $conn->prepare("SELECT * FROM users");
-			  $select_op->execute();
+			  $select_products = $conn->prepare("SELECT * FROM productst");
+			  $select_products->execute();
 
-			  if ($select_op->rowCount() > 0) {
-			   	while ($fetch_op = $select_op->fetch(PDO::FETCH_ASSOC)) 
+			  if ($select_products->rowCount() > 0) {
+			   	while ($fetch_products = $select_products->fetch(PDO::FETCH_ASSOC)) 
 			   	{  	
 			    
 			?>
 			<form action="" method="post" class="box">
-				<input type="hidden" name="op_id" value="<?=$fetch_op['id']; ?>">
-				<?php { ?>
-				<img src="icon.jpg" class="image">
+				<input type="hidden" name="product_id" value="<?=$fetch_products['id']; ?>">
+				<?php if($fetch_products['image'] != ''){ ?>
+				<img src="../../Examshop/components/product/<?=$fetch_products['image']; ?>" class="image">
 			<?php } ?>
-			<div class="name"> <?=$fetch_op['name']; ?></div>
-			<div class="name"><?=$fetch_op['username']; ?></div>
-			<div class="name"><?=$fetch_op['password']; ?></div>
+			<div class="price">$ <?=$fetch_products['price']; ?></div>
+			<div class="name"><?=$fetch_products['name']; ?></div>
 			<div class="flex-btn">
-				<a href="edit_user.php?id=<?=$fetch_op['id']; ?>" class="btn">edit</a>
-				<a href="del_user.php?id=<?=$fetch_op['id']; ?>" class="btn">delete</a>
-				
+				<a href="edit_product.php?id=<?=$fetch_products['id']; ?>" class="btn">edit</a>
+				<button type="submit" name="delete" class="btn" onclick="return confirm('delete this product');">delete</button>
 			</div>
 			</form>
 			<?php

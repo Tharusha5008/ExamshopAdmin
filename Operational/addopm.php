@@ -12,7 +12,7 @@
    	$p_id = $_POST['id'];
    	$p_id = filter_var($p_id, FILTER_SANITIZE_STRING);
 
-   	$delete_product = $conn->prepare("DELETE FROM users WHERE id = ?");
+   	$delete_product = $conn->prepare("DELETE FROM subadmin WHERE id = ?");
    	$delete_product->execute([$p_id]);
 
    	echo "<script>alert(' deleted success');</script>";
@@ -31,13 +31,13 @@
 	
 <div class="main">
 	<div class="banner">
-		<h1>users</h1>
+		<h1>staff</h1>
 	</div>
 	<section class="show-post">
-		<h1 class="heading">all users</h1>
+		<h1 class="heading">all Operational Staff</h1>
 		<div class="box-container">
 			<?php
-			  $select_op = $conn->prepare("SELECT * FROM users");
+			  $select_op = $conn->prepare("SELECT * FROM subadmin");
 			  $select_op->execute();
 
 			  if ($select_op->rowCount() > 0) {
@@ -51,12 +51,11 @@
 				<img src="icon.jpg" class="image">
 			<?php } ?>
 			<div class="name"> <?=$fetch_op['name']; ?></div>
-			<div class="name"><?=$fetch_op['username']; ?></div>
+			<div class="name"><?=$fetch_op['email']; ?></div>
 			<div class="name"><?=$fetch_op['password']; ?></div>
 			<div class="flex-btn">
-				<a href="edit_user.php?id=<?=$fetch_op['id']; ?>" class="btn">edit</a>
-				<a href="del_user.php?id=<?=$fetch_op['id']; ?>" class="btn">delete</a>
-				
+				<a href="edit_subadmin.php?id=<?=$fetch_op['id']; ?>" class="btn">edit</a>
+				<button type="submit" name="delete" class="btn" onclick="return confirm('delete this employee');">delete</button>
 			</div>
 			</form>
 			<?php

@@ -28,43 +28,10 @@
 		<div class="box-container">
 		<div class="box">
 		<h3>welcome !</h3>
-		<p>Manage Easiliy your works </p>
+		<p>Operational Staff </p>
 		<P>The Gallery Cafe</P>
 		</div>
-		<div class="box">
-			<?php
-			$select_product = $conn->prepare("SELECT * FROM productst");
-			$select_product->execute();
-			$nop = $select_product->rowCount();
-			?>
-			<h3><?=$nop ;?></h3>
-			<p>products added</p>
-			<a href="add_product.php" class="btn"> add new product</a>
-			<a href="view_product.php" class="btn"> edit products</a>
-		</div>
-		<div class="box">
-			<?php
-			$select_sub = $conn->prepare("SELECT * FROM subadmin");
-			$select_sub->execute();
-			$nop = $select_sub->rowCount();
-			?>
-			<h3><?=$nop ;?></h3>
-			<p>Operational Staff</p>
-			<a href="addop.php" class="btn"> add </a>
-			<a href="addopm.php" class="btn"> manage </a>
 
-		</div>
-		<div class="box">
-			<?php
-			$select_users = $conn->prepare("SELECT * FROM users");
-			$select_users->execute();
-			$nop = $select_users->rowCount();
-			?>
-			<h3><?=$nop ;?></h3>
-			<p>Registered Users</p>
-			<a href="accountsm.php" class="btn"> manage user</a>
-			
-		</div>
 		<div class="box">
 			<?php
 			$select_orders = $conn->prepare("SELECT * FROM orders");
